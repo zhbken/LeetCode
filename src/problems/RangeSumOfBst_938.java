@@ -2,6 +2,8 @@ package problems;
 
 import problems.dto.TreeNode;
 
+import java.util.Stack;
+
 public class RangeSumOfBst_938 {
 
 	public int rangeSumBST(TreeNode root, int L, int R) {
@@ -28,6 +30,30 @@ public class RangeSumOfBst_938 {
 			sum = root.val;
 		}
 		sum += rangeSumBST_Brute(root.left, L, R) + rangeSumBST_Brute(root.right, L, R);
+		return sum;
+	}
+
+	public int rangeSumBST_Iterative(TreeNode root, int L, int R) {
+		int sum = 0;
+		if (root == null) return 0;
+
+		Stack<TreeNode> stack = new Stack<>();
+		stack.push(root);
+		while (!stack.isEmpty()) {
+
+			TreeNode node = stack.pop();
+			if (node.val >= L && node.val <= R) {
+				sum += node.val;
+			}
+
+			if (node.left != null && (node.val >= L || node.val >= R)) {
+				stack.push(node.left);
+			}
+
+			if (node.right != null && (node.val <= R || node.val <= L)) {
+				stack.push(node.right);
+			}
+		}
 		return sum;
 	}
 
