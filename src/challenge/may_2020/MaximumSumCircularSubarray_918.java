@@ -55,40 +55,4 @@ public class MaximumSumCircularSubarray_918 {
 
         return globalMax;
     }
-
-    public int maxSubarraySumCircular2(int[] A) {
-        if (A == null || A.length == 0) {
-            return 0;
-        }
-
-        if (A.length == 1) {
-            return A[0];
-        }
-
-        int N = A.length;
-        int globalMax = A[0];
-        int localMax = A[0];
-
-        int b = 1;
-        for (int i = 1; i < 2 * N; i++) {
-            if (A[i % N] < A[i % N] + localMax) {
-                localMax = A[i % N] + localMax;
-                b++;
-            } else {
-                localMax = A[i % N];
-                b = 1;
-            }
-
-            if (b == N) {
-                localMax = localMax - A[(i - b+1)%N];
-                b--;
-            }
-
-            if (localMax > globalMax && b <= N) {
-                globalMax = localMax;
-            }
-        }
-
-        return globalMax;
-    }
 }
